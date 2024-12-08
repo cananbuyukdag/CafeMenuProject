@@ -1,0 +1,28 @@
+﻿@model EntityLayer.Concrete.User
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="margin: 0px 50px 20px 20px" class="form-group">
+    <br />
+    <h4>Kullanıcı Güncelleme</h4>
+    @using (Html.BeginForm("Update", "AdminUser", FormMethod.Post))
+    {
+        @Html.Label("Ad", new { @class = "text-bold" });
+        @Html.TextBoxFor(w => w.Name, new { @class = "form-control" });
+        @Html.ValidationMessageFor(w => w.Name, "", new { @class = "text-danger" });
+        <br />
+        @Html.Label("Soyad", new { @class = "text-bold" });
+        @Html.TextBoxFor(w => w.Surname, new { @class = "form-control" });
+        @Html.ValidationMessageFor(w => w.Surname, "", new { @class = "text-danger" });
+        <br />
+        @Html.Label("Kullanıcı Adı", new { @class = "text-bold" });
+        @Html.TextBoxFor(w => w.Username, new { @class = "form-control" });
+        @Html.ValidationMessageFor(w => w.Username, "", new { @class = "text-danger" });
+        <br />
+        @Html.Label("Şifre", new { @class = "text-bold" });
+        @Html.TextBoxFor(w => w.HashPassword, new { @class = "form-control" });
+        <br />
+        <button class="btn btn-info">Bilgileri Güncelle</button>
+    }

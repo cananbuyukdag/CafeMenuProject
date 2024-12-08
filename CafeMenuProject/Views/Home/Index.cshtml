@@ -1,0 +1,160 @@
+﻿@model List<EntityLayer.Concrete.Product>
+@{
+    ViewBag.Title = "Home Page";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cafe Menu</title>
+    <style>
+        body {
+            background-image: url(https://cdn.freecodecamp.org/curriculum/css-cafe/beans.jpg);
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 30px;
+        }
+
+        .established {
+            font-style: italic;
+        }
+
+        h1,
+        h2,
+        p {
+            text-align: center;
+        }
+
+        .menu {
+            width: 80%;
+            background-color: burlywood;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            max-width: 950px;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        hr {
+            height: 2px;
+            background-color: brown;
+            border-color: brown;
+        }
+
+        .bottom-line {
+            margin-top: 25px;
+        }
+
+        h1,
+        h2 {
+            font-family: Impact, serif;
+        }
+
+        .item p {
+            display: inline-block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 18px;
+            margin-left: 20px;
+        }
+
+        .flavor,
+        .dessert {
+            text-align: left;
+            width: 75%;
+        }
+
+        .price {
+            text-align: right;
+            width: 24%;
+        }
+
+        .address {
+            margin-bottom: 5px;
+        }
+
+        a {
+            color: black;
+        }
+
+            a:visited {
+                color: black;
+            }
+
+            a:hover {
+                color: brown;
+            }
+
+            a:active {
+                color: brown;
+            }
+    </style>
+</head>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cafe Menu</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="menu">
+        <header>
+            <h1>CB Patisserie&Coffee</h1>
+        </header>
+        <hr />
+        <main>
+            <section>
+                <h2>Kahveler / Coffees</h2>
+                <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg"
+                     alt="coffee icon" />
+                @foreach (var item in Model)
+                {
+                    if (item.CategoryId == 1)
+                    {
+                        <article class="item" style="display:flex;justify-content:flex-start;margin-bottom:10px">
+                            <img src="@Url.Content("~/UploadedImages/" + item.ImagePath)" alt="@item.ProductName" style="width:100px; height:auto;" />
+                            <p class="flavor" style="margin-right10px">@item.ProductName</p>
+                            <p class="price">₺@item.Price.ToString("N2") /  $@((item.Price * (decimal)ViewBag.UsdRate).ToString("F2"))/  €@((item.Price * (decimal)ViewBag.EuroRate).ToString("F2"))</p>
+                        </article>
+                    }
+
+                }
+            </section>
+            <section>
+                <h2>Tatlılar / Desserts</h2>
+                <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg"
+                     alt="pie icon" />
+                @foreach (var item in Model)
+                {
+                    if (item.CategoryId == 3)
+                    {
+                        <article class="item" style="display:flex;justify-content:flex-start;margin-bottom:10px">
+                            <img src="@Url.Content("~/UploadedImages/" + item.ImagePath)" alt="@item.ProductName" style="width:100px; height:auto;" />
+                            <p class="flavor" style="margin-right10px">@item.ProductName</p>
+                            <p class="price">₺@item.Price.ToString("N2") /  $@((item.Price * (decimal)ViewBag.UsdRate).ToString("F2"))/  €@((item.Price * (decimal)ViewBag.EuroRate).ToString("F2"))</p>
+                        </article>
+                    }
+
+                }
+            </section>
+        </main>
+    </div>
+</body>
+</html>

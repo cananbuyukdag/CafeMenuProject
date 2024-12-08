@@ -1,0 +1,74 @@
+﻿@model List<EntityLayer.Concrete.Product>
+@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="margin: 0px 20px 20px 20px" class="form-group">
+    <table class="table table-bordered">
+        <br />
+        <h3>Ürün Listesi</h3>
+        <td> <a class="btn btn-success btn-sm " href="/AdminProduct/ProductAdd">Yeni Ürün Ekle</a></td>
+        <tr>
+            <th>#</th>
+            <th>Ürün Adı</th>
+            <th>Ürün Kategorisi</th>
+            <th>Fiyat</th>
+            <th>Ürün Görseli</th>
+            <th>Oluşturulma Tarihi</th>
+            <th>Sil</th>
+            <th>Düzenle</th>
+
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.ProductId</th>
+                <td>@item.ProductName</td>
+                <td>@item.CategoryId</td>
+                <td>@item.Price</td>
+                <td>@item.ImagePath</td>
+                <td>@item.CreatedDate</td>
+                <td><a id="delet" class="btn  btn-info btn-sm" href="/AdminProduct/Update/@item.ProductId">Düzenle</a></td>
+                <td>
+                    <a href="@Url.Action("Delete", "AdminProduct", new { id = @item.ProductId })" id="delet" class="btn btn-danger btn-sm">Sil</a>
+                </td>
+
+            </tr>
+        }
+    </table>
+
+</div>
+
+<script type="text/javascript">$('#delet').on('click', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        Swal.fire({
+            title: 'Ürünü silmek istediğinizden emin misiniz?',
+            text: "Bu işlem geri alınamaz!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Evet, sil!',
+            cancelButtonText: 'Vazgeç'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result) {
+                            Swal.fire(
+                                'Silindi!',
+                                'Ürün başarıyla silindi.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });</script>

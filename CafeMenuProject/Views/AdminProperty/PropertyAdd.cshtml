@@ -1,0 +1,21 @@
+﻿@model EntityLayer.Concrete.Property
+@{
+    ViewBag.Title = "PropertyAdd";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="margin: 0px 50% 20px 20px" class="form-group">
+    <br />
+    <h3>Yeni Özellik</h3>
+    @using (Html.BeginForm("PropertyAdd", "AdminProperty", FormMethod.Post))
+    {
+        @Html.Label("Anahtar", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.Key, new { @class = "form-control" })
+        <br />
+        @Html.Label("Özellik Adı", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.Value, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Value)
+        <br />
+        <button class="btn btn-info">Kaydet</button>
+    }
+</div>

@@ -1,0 +1,25 @@
+﻿@model EntityLayer.Concrete.Property
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="margin: 0px 50% 20px 20px" class="form-group">
+    <br />
+    <h3>Özellik Güncelle</h3>
+    @using (Html.BeginForm("Update", "AdminProperty", FormMethod.Post))
+    {
+        @Html.Label("ID", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.PropertyId, new { @class = "form-control" })
+        <br />
+        @Html.Label("Anahtar", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.Key, new { @class = "form-control" })
+        <br />
+        @Html.Label("Özellik Adı", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.Value, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Value)
+        <br />
+        <button class="btn btn-success">Güncelle</button>
+    }
+
+</div>

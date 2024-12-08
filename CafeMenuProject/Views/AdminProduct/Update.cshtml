@@ -1,0 +1,40 @@
+﻿@model EntityLayer.Concrete.Product
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <div>
+        <div style="margin: 0px 50% 20px 20px" class="form-group">
+            <br />
+            <h3>Ürünü Güncelle</h3>
+            @using (Html.BeginForm("Update", "AdminProduct", FormMethod.Post))
+            {
+                @Html.Label("Ürün Adı", new { @class = "text-bold" })
+                @Html.TextBoxFor(x => x.ProductName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.ProductName)
+                <br />
+                @Html.HiddenFor(x => x.CreatedDate, new { @class = "form-control disabled", @readonly = true })
+
+                @Html.Label("Kategori", new { @class = "text-bold" })
+                @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.Item, new { @class = "form-control" })
+                <br />
+                @Html.LabelFor(x => x.Price)
+                @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
+                <br />
+   
+                @Html.LabelFor(model => model.ImagePath, "Ürün Görseli")
+                {
+                <img src="@Url.Content("~/UploadedImages/placeholder.jpg")" alt="productImage"
+                         style="width:50px; height:auto;" />
+                }
+                <input type="file" name="ImageUpload" class="form-control" />
+                <br />
+                <button class="btn btn-info">Güncelle</button>
+            }
+        </div>
+    </div>
+</div>
+
+
