@@ -1,4 +1,4 @@
-﻿@model List<EntityLayer.Concrete.Product>
+﻿@model List<CafeMenuProject.Models.ProductCategoryViewModel>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -120,13 +120,25 @@
         </header>
         <hr />
         <main>
-            <section>
-                <h2>Kahveler / Coffees</h2>
-                <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg"
-                     alt="coffee icon" />
-                @foreach (var item in Model)
-                {
-                    if (item.CategoryId == 1)
+            @foreach (var categoryGroup in Model.GroupBy(m => m.CategoryName))
+            {
+                <section>
+                    <h2>@categoryGroup.Key.ToString()</h2>
+                    @if (categoryGroup.Key == "Kahveler / Coffees")
+                    {
+                        <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg" alt="coffee icon" />
+                    }
+                    else if (categoryGroup.Key == "Tatlılar / Desserts")
+                    {
+                        <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg" alt="pie icon" />
+                    }
+                    else
+                    {
+                        <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/coffee.jpg" alt="default icon" />
+                    }
+
+
+                    @foreach (var item in categoryGroup)
                     {
                         <article class="item" style="display:flex;justify-content:flex-start;margin-bottom:10px">
                             <img src="@Url.Content("~/UploadedImages/" + item.ImagePath)" alt="@item.ProductName" style="width:100px; height:auto;" />
@@ -135,26 +147,26 @@
                         </article>
                     }
 
-                }
-            </section>
-            <section>
-                <h2>Tatlılar / Desserts</h2>
-                <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg"
-                     alt="pie icon" />
-                @foreach (var item in Model)
-                {
-                    if (item.CategoryId == 3)
+                </section>
+            }
+                @*<section>
+                    <h2>Tatlılar / Desserts</h2>
+                    <img src="https://cdn.freecodecamp.org/curriculum/css-cafe/pie.jpg"
+                         alt="pie icon" />
+                    @foreach (var item in Model)
                     {
-                        <article class="item" style="display:flex;justify-content:flex-start;margin-bottom:10px">
-                            <img src="@Url.Content("~/UploadedImages/" + item.ImagePath)" alt="@item.ProductName" style="width:100px; height:auto;" />
-                            <p class="flavor" style="margin-right10px">@item.ProductName</p>
-                            <p class="price">₺@item.Price.ToString("N2") /  $@((item.Price * (decimal)ViewBag.UsdRate).ToString("F2"))/  €@((item.Price * (decimal)ViewBag.EuroRate).ToString("F2"))</p>
-                        </article>
-                    }
+                        if (item.CategoryId == 3)
+                        {
+                            <article class="item" style="display:flex;justify-content:flex-start;margin-bottom:10px">
+                                <img src="@Url.Content("~/UploadedImages/" + item.ImagePath)" alt="@item.ProductName" style="width:100px; height:auto;" />
+                                <p class="flavor" style="margin-right10px">@item.ProductName</p>
+                                <p class="price">₺@item.Price.ToString("N2") /  $@((item.Price * (decimal)ViewBag.UsdRate).ToString("F2"))/  €@((item.Price * (decimal)ViewBag.EuroRate).ToString("F2"))</p>
+                            </article>
+                        }
 
-                }
-            </section>
-        </main>
+                    }
+                </section>*@
+            </main>
     </div>
 </body>
 </html>

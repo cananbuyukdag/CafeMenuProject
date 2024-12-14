@@ -50,14 +50,6 @@ namespace CafeMenuProject.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Delete(int? id)
-        {
-            var _id = id ?? 0;
-            var c = _property.GetById(_id);
-            _property.Delete(c);
-            return RedirectToAction("Index");
-        }
 
         [HttpGet]
         public ActionResult Update(int id)
@@ -70,6 +62,15 @@ namespace CafeMenuProject.Controllers
         public ActionResult Update(Property entity)
         {
             _property.Update(entity);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int? id)
+        {
+            var _id = id ?? 0;
+            var p = _property.GetById(_id);
+            _property.Delete(p);
             return RedirectToAction("Index");
         }
     }

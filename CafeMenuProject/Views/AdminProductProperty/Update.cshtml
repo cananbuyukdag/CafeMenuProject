@@ -1,0 +1,24 @@
+﻿@model EntityLayer.Concrete.ProductProperty
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="margin: 0px 50% 20px 20px" class="form-group">
+    <br />
+    <h3>Yeni Ürün</h3>
+    @using (Html.BeginForm("Update", "AdminProductProperty", FormMethod.Post))
+    {
+        @Html.Label("Id", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.ProductProdpertyId, new { @class = "form-control", @readonly = "readonly" })
+        <br />
+        @Html.Label("Ürün", new { @class = "text-bold" })
+        @Html.DropDownListFor(x => x.ProductId, (List<SelectListItem>)ViewBag.Product, new { @class = "form-control" })
+        <br />
+        @Html.Label("Özellik", new { @class = "text-bold" })
+        @Html.DropDownListFor(y => y.PropertyId, (List<SelectListItem>)ViewBag.Property, new { @class = "form-control" })
+        <br />
+
+        <button class="btn btn-info">Kaydet</button>
+    }
+</div>

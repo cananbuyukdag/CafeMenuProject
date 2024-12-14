@@ -40,28 +40,25 @@ namespace CafeMenuProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProductAdd(Product entity, HttpPostedFileBase ImagePath)
+        public ActionResult ProductAdd(Product entity, HttpPostedFileBase ImageUpload)
         {
             ProductValidator validator = new ProductValidator();
             ValidationResult result = validator.Validate(entity);
             {
                 if (ModelState.IsValid)
                 {
-                    if (ImagePath != null && ImagePath.ContentLength > 0)
+                    if (ImageUpload != null && ImageUpload.ContentLength > 0)
                     {
-                        var uploadDirectory = Server.MapPath("~/UploadedImages");
-                        if (!Directory.Exists(uploadDirectory))
-                        {
-                            Directory.CreateDirectory(uploadDirectory);
-                        }
+                        var fileName = Path.GetFileName(ImageUpload.FileName);
+                        var path = Path.Combine(Server.MapPath("~/UploadedImages/"), fileName);
+                        ImageUpload.SaveAs(path);
+                        entity.ImagePath = "/Images/" + fileName;
 
-                        var fileName = Path.GetFileName(ImagePath.FileName);
-                        var path = Path.Combine(uploadDirectory, fileName);
-                        ImagePath.SaveAs(path);
-
-                        entity.ImagePath = fileName;
                     }
-
+                    if (string.IsNullOrEmpty(entity.ImagePath))
+                    {
+                        ModelState.AddModelError("", "Mevcut resim yok, yeni bir resim yükleyin.");
+                    }
                     entity.CreatedDate = DateTime.Now;
                     _product.ProductAdd(entity);
                     return RedirectToAction("Index");
@@ -70,13 +67,15 @@ namespace CafeMenuProject.Controllers
                 return View(_product);
             }
         }
-
-                [HttpPost]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            var _id = id ?? 0;
-            var c = _product.GetById(_id);
-            _product.Delete(c);
+            var p = _product.GetById(id);
+
+            if (p != null)
+            {
+                p.IsDeleted = !p.IsDeleted;
+                _product.Update(p);
+            }
             return RedirectToAction("Index");
         }
 
@@ -89,18 +88,33 @@ namespace CafeMenuProject.Controllers
                                    Text = x.CategoryName,
                                    Value = x.CategoryId.ToString()
                                }).ToList();
+
             ViewBag.Item = categoryget;
             var p = _product.GetById(id);
             return View(p);
         }
 
         [HttpPost]
-        public ActionResult Update(Product entity, HttpPostedFileBase ImageUpload)
+        public ActionResult Update(Product entity, HttpPostedFileBase ImagePath)
         {
             ProductValidator validator = new ProductValidator();
             ValidationResult result = validator.Validate(entity);
             if (result.IsValid)
             {
+                if (ImagePath != null && ImagePath.ContentLength > 0)
+                {
+                    var uploadDirectory = Server.MapPath("~/UploadedImages");
+                    if (!Directory.Exists(uploadDirectory))
+                    {
+                        Directory.CreateDirectory(uploadDirectory);
+                    }
+
+                    var fileName = Path.GetFileName(ImagePath.FileName);
+                    var path = Path.Combine(uploadDirectory, fileName);
+                    ImagePath.SaveAs(path);
+
+                    entity.ImagePath = fileName;
+                }
                 _product.Update(entity);
                 return RedirectToAction("Index");
             }

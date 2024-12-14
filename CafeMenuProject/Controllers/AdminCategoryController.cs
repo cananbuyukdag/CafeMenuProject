@@ -48,12 +48,15 @@ namespace CafeMenuProject.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            var _id = id ?? 0;
-            var c = _category.GetById(_id);
-            _category.Delete(c);
+            var c = _category.GetById(id);
+
+            if (c != null)
+            {
+                c.IsDeleted = !c.IsDeleted;
+                _category.Update(c);
+            }
             return RedirectToAction("Index");
         }
 

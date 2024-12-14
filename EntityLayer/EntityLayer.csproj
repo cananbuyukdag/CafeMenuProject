@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Concrete\Category.cs" />
     <Compile Include="Concrete\Product.cs" />
+    <Compile Include="Concrete\ProductCategoryViewModel.cs" />
     <Compile Include="Concrete\ProductProperty.cs" />
     <Compile Include="Concrete\Property.cs" />
     <Compile Include="Concrete\User.cs" />

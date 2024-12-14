@@ -16,8 +16,8 @@
             <th>Fiyat</th>
             <th>Ürün Görseli</th>
             <th>Oluşturulma Tarihi</th>
-            <th>Sil</th>
             <th>Düzenle</th>
+            <th>Aktif mi?</th>
 
         </tr>
         @foreach (var item in Model)
@@ -31,7 +31,7 @@
                 <td>@item.CreatedDate</td>
                 <td><a id="delet" class="btn  btn-info btn-sm" href="/AdminProduct/Update/@item.ProductId">Düzenle</a></td>
                 <td>
-                    <a href="@Url.Action("Delete", "AdminProduct", new { id = @item.ProductId })" id="delet" class="btn btn-danger btn-sm">Sil</a>
+                    <a href="@Url.Action("Delete", "AdminProduct", new { id = item.ProductId })" class="btn btn-sm @(item.IsDeleted ? "btn-success" : "btn-danger")">@(item.IsDeleted == true ? "Aktif Yap" : "Pasif Yap")</a>
                 </td>
 
             </tr>
@@ -40,11 +40,13 @@
 
 </div>
 
-<script type="text/javascript">$('#delet').on('click', function (e) {
+<script type="text/javascript">
+
+    $('#delet').on('click', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
         Swal.fire({
-            title: 'Ürünü silmek istediğinizden emin misiniz?',
+            title: 'Kategoriyi silmek istediğinizden emin misiniz?',
             text: "Bu işlem geri alınamaz!",
             icon: 'warning',
             showCancelButton: true,
@@ -71,4 +73,7 @@
                 });
             }
         });
-    });</script>
+    });
+
+
+</script>

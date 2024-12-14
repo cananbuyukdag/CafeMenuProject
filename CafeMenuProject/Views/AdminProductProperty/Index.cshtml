@@ -1,19 +1,19 @@
-﻿@model List<EntityLayer.Concrete.Property>
+﻿@model List<CafeMenuProject.Models.ProductPropertyViewModel>
+
 @{
-    ViewBag.Title = "Anasayfa";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div style="margin: 0px 20px 20px 20px" class="form-group">
     <table class="table table-bordered">
         <br />
-        <h3>Özellikler Listesi</h3>
-        <td> <a class="btn btn-success btn-sm " href="/AdminProperty/PropertyAdd">Yeni Özellik Ekle</a></td>
+        <h3>Ürün Özellikleri Listesi</h3>
+        <td> <a class="btn btn-success btn-sm " href="/AdminProductProperty/ProductPropertyAdd">Yeni Özellik Ekle</a></td>
         <tr>
             <th>#</th>
-            <th>Anahtar</th>
-            <th>Özellik Değeri</th>
-            <th>Oluşturma Tarihi</th>
+            <th>Ürün Adı</th>
+            <th>Özellik Adı</th>
             <th>Sil</th>
             <th>Düzenle</th>
 
@@ -21,11 +21,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <th>@item.PropertyId</th>
-                <td>@item.Key</td>
-                <td>@item.Value</td>
-                <td>@item.CreatedDate</td>
-                <td><a id="delet" class="btn  btn-info btn-sm" href="/AdminProperty/Update/@item.PropertyId">Düzenle</a></td>
+                <th>@item.ProductPropertyId</th>
+                <td>@item.ProductName</td>
+                <td>@item.PropertyName</td>
+                <td><a id="delet" class="btn  btn-info btn-sm" href="/AdminProductProperty/Update/@item.ProductPropertyId">Düzenle</a></td>
                 <td>
                     <a href="@Url.Action("Delete", "AdminProperty", new { id = @item.PropertyId })" id="delete" class="btn btn-danger btn-sm">Sil</a>
                 </td>
@@ -90,3 +89,5 @@
         });
     });
 </script>
+
+

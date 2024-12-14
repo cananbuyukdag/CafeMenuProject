@@ -13,8 +13,8 @@
             <th>#</th>
             <th>Kategori</th>
             <th>Oluşturulma Tarihi</th>
-            <th>Sil</th>
             <th>Düzenle</th>
+            <th>Aktif mi?</th>
 
         </tr>
         @foreach (var item in Model)
@@ -25,10 +25,8 @@
                 <td>@item.CreatedDate</td>
                 <td><a id="delet" class="btn  btn-info btn-sm" href="/AdminCategory/Update/@item.CategoryId">Düzenle</a></td>
                 <td>
-                    <a href="@Url.Action("Delete", "AdminCategory", new { id = @item.CategoryId })" id="delet" class="btn btn-danger btn-sm">Sil</a>
-                    @*<a class="btn btn-danger btn-sm" href="/AdminCategory/Delete/@item.Id">Sil</a>*@
+                    <a href="@Url.Action("Delete", "AdminCategory", new { id = item.CategoryId })" class="btn btn-sm @(item.IsDeleted ? "btn-success" : "btn-danger")">@(item.IsDeleted == true ? "Aktif Yap" : "Pasif Yap")</a>
                 </td>
-
             </tr>
         }
     </table>

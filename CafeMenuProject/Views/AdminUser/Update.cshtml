@@ -7,8 +7,11 @@
 <div style="margin: 0px 50px 20px 20px" class="form-group">
     <br />
     <h4>Kullanıcı Güncelleme</h4>
-    @using (Html.BeginForm("Update", "AdminUser", FormMethod.Post))
+    @using (Html.BeginForm("UpdateUser", "AdminUser", FormMethod.Post))
     {
+        @Html.Label("Id", new { @class = "text-bold" })
+        @Html.TextBoxFor(x => x.UserId, new { @class = "form-control", @readonly = "readonly" })
+        <br />
         @Html.Label("Ad", new { @class = "text-bold" });
         @Html.TextBoxFor(w => w.Name, new { @class = "form-control" });
         @Html.ValidationMessageFor(w => w.Name, "", new { @class = "text-danger" });

@@ -11,6 +11,9 @@
             <h3>Ürünü Güncelle</h3>
             @using (Html.BeginForm("Update", "AdminProduct", FormMethod.Post))
             {
+                @Html.Label("Id", new { @class = "text-bold" })
+                @Html.TextBoxFor(x => x.ProductId, new { @class = "form-control", @readonly = "readonly" })
+                <br />
                 @Html.Label("Ürün Adı", new { @class = "text-bold" })
                 @Html.TextBoxFor(x => x.ProductName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.ProductName)
@@ -23,13 +26,15 @@
                 @Html.LabelFor(x => x.Price)
                 @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
                 <br />
-   
-                @Html.LabelFor(model => model.ImagePath, "Ürün Görseli")
+
+                @Html.LabelFor(model => model.ImagePath, "Ürün Resmi")
+                if (!string.IsNullOrEmpty(Model.ImagePath))
                 {
-                <img src="@Url.Content("~/UploadedImages/placeholder.jpg")" alt="productImage"
-                         style="width:50px; height:auto;" />
+                    <div>
+                        <img src="@Url.Content("~/UploadedImages/" + Model.ImagePath)" alt="@Model.ProductName" style="width:100px; height:auto;" />
+                    </div>
                 }
-                <input type="file" name="ImageUpload" class="form-control" />
+                <input type="file" name="ImagePath" class="form-control" />
                 <br />
                 <button class="btn btn-info">Güncelle</button>
             }

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using CafeMenuProject.Services;
 using DataAccsessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
@@ -24,41 +25,20 @@ namespace CafeMenuProject.Controllers
         [HttpPost]
         public ActionResult Index(User entity)
         {
-            var result = adm.GetList().FirstOrDefault(x => x.Username == entity.Username && x.HashPassword == entity.HashPassword);
+            var result = adm.GetList().FirstOrDefault(x => x.Username == entity.Username);
             if (result != null)
             {
+                result.SaltPassword = HashingHelper.GenerateSalt();
+                result.HashPassword = HashingHelper.HashPassword(entity.HashPassword, entity.SaltPassword);
 
-                FormsAuthentication.SetAuthCookie(entity.Username, false);
-                Session["Username"] = entity.Username;
-                entity.SaltPassword = GenerateSalt();
-                entity.HashPassword = HashPassword(entity.HashPassword, entity.SaltPassword);
                 return RedirectToAction("Index", "AdminCategory");
             }
             else
             {
-                //TempData["msg"] = "false";
                 return Json(new { success = false });
             }
         }
-        private string GenerateSalt()
-        {
-            byte[] salt = new byte[16];
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(salt);
-            }
-            return Convert.ToBase64String(salt);
-        }
 
-        private string HashPassword(string password, string salt)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var saltedPassword = Encoding.UTF8.GetBytes(password + salt);
-                var hash = sha256.ComputeHash(saltedPassword);
-                return Convert.ToBase64String(hash);
-            }
-        }
 
     }
 }

@@ -144,11 +144,14 @@
     <Compile Include="Controllers\AdminPropertyController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\ProductCategoryViewModel.cs" />
+    <Compile Include="Models\ProductPropertyViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ExchangeRate.cs" />
+    <Compile Include="Services\HashingHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE-3.0.4\.gitignore" />
@@ -2569,11 +2572,12 @@
     <Content Include="Views\AdminUser\Index.cshtml" />
     <Content Include="Views\AdminUser\AddUser.cshtml" />
     <Content Include="Views\AdminUser\Update.cshtml" />
+    <Content Include="Views\AdminProductProperty\Index.cshtml" />
+    <Content Include="Views\AdminProductProperty\ProductPropertyAdd.cshtml" />
+    <Content Include="Views\AdminProductProperty\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\AdminProductProperty\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>

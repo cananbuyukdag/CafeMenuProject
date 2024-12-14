@@ -1,5 +1,7 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using BusinessLayer.Validationrules;
+using CafeMenuProject.Services;
 using DataAccsessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -26,15 +28,16 @@ namespace CafeMenuProject.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddUser(User entity) 
+        public ActionResult AddUser(User entity)
         {
             UserValidator validator = new UserValidator();
             ValidationResult result = validator.Validate(entity);
             if (result.IsValid)
             {
+                entity.HashPassword = HashingHelper.HashPassword(entity.HashPassword, entity.SaltPassword);
                 manager.AddUser(entity);
-                return RedirectToAction("Index");
 
+                return RedirectToAction("Index");
             }
             else
             {
@@ -53,25 +56,23 @@ namespace CafeMenuProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(User entity)
+        public ActionResult UpdateUser(User entity)
         {
-
             UserValidator validator = new UserValidator();
             ValidationResult result = validator.Validate(entity);
-            if (result.IsValid)
-            {
-                manager.UserUpdate(entity);
-                return RedirectToAction("Index");
 
+            if (ModelState.IsValid)
+            {
+                HashingHelper.UpdatePasswordWithSalt(entity); // Salt ve Hash güncellemesi
+
+                manager.UserUpdate(entity); // Kullanıcı güncellemesi
+                return RedirectToAction("Index");
             }
             else
             {
-                foreach (var item in result.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
+                // Hata mesajlarını ekleyin
+                return View(entity);
             }
-            return View();
         }
 
     }
