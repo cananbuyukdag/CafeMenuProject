@@ -65,7 +65,6 @@ namespace CafeMenuProject.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
         public ActionResult Delete(int? id)
         {
             var _id = id ?? 0;

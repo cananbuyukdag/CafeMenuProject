@@ -14,5 +14,6 @@ namespace CafeMenuProject.Models
         public bool IsDeleted { get; set; }
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public List<string> PropertyName { get; set; }
     }
 }

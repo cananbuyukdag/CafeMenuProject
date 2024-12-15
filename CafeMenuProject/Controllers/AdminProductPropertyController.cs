@@ -112,7 +112,7 @@ namespace CafeMenuProject.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpDelete]
         public ActionResult Delete(int? id)
         {
             var _id = id ?? 0;

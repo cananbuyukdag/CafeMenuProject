@@ -142,8 +142,12 @@
                     {
                         <article class="item" style="display:flex;justify-content:flex-start;margin-bottom:10px">
                             <img src="@Url.Content("~/UploadedImages/" + item.ImagePath)" alt="@item.ProductName" style="width:100px; height:auto;" />
-                            <p class="flavor" style="margin-right10px">@item.ProductName</p>
-                            <p class="price">₺@item.Price.ToString("N2") /  $@((item.Price * (decimal)ViewBag.UsdRate).ToString("F2"))/  €@((item.Price * (decimal)ViewBag.EuroRate).ToString("F2"))</p>
+                            <p class="flavor" style="margin-right10px; display: flex; flex-direction: column;">
+                                @item.ProductName
+                                <span style="font-size: 12px;" >@string.Join(", ", item.PropertyName ?? new List<string>())</span>
+                            </p>
+
+                        <p class="price">₺@item.Price.ToString("N2") /  $@((item.Price * (decimal)ViewBag.UsdRate).ToString("F2"))/  €@((item.Price * (decimal)ViewBag.EuroRate).ToString("F2"))</p>
                         </article>
                     }
 
